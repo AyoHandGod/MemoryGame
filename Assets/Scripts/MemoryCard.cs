@@ -20,10 +20,6 @@ public class MemoryCard : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = image;
     }
 
-    void Start()
-    {
-
-    }
     public void OnMouseDown()
     {
         if (cardBack.activeSelf && sceneController.canReveal)

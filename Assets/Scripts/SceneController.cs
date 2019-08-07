@@ -21,6 +21,11 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LayoutCards();
+    }
+
+    private void LayoutCards()
+    {
         Vector3 startPos = originalCard.transform.position;
         int[] numbers = { 0, 0, 1, 1, 2, 2, 3, 3 };
 
@@ -50,7 +55,6 @@ public class SceneController : MonoBehaviour
                 card.transform.position = new Vector3(posX, posY, startPos.z);
             }
         }
-
     }
 
     private int[] ShuffleArray(int[] numbers)
