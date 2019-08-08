@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
     [SerializeField] private MemoryCard originalCard;
     [SerializeField] private Sprite[] images;
+    [SerializeField] private TextMesh scoreLabel;
+
+    private PlayAudio playAudio;
 
     private MemoryCard _firstRevealed;
     private MemoryCard _secondRevealed;
@@ -21,6 +25,7 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playAudio = GetComponent<PlayAudio>();
         LayoutCards();
     }
 
@@ -84,9 +89,11 @@ public class SceneController : MonoBehaviour
     {
         if (_firstRevealed == null)
         {
+            playAudio.PlayGuessClip();
             _firstRevealed = card; // if first revealed slot empty, fill it with card.
         } else
         {
+            playAudio.PlayGuessClip();
             _secondRevealed = card; // else fill in the second revealed slot.
             StartCoroutine(CheckMatch());
         }
@@ -96,8 +103,9 @@ public class SceneController : MonoBehaviour
     {
         if (_firstRevealed.id == _secondRevealed.id)
         {
+            playAudio.PlaySuccessClip();
             score++;
-            Debug.Log("Score: " + score);
+            scoreLabel.text = "Score: " + score;
         } else
         {
             yield return new WaitForSeconds(.5f);
@@ -107,5 +115,10 @@ public class SceneController : MonoBehaviour
 
         _firstRevealed = null;
         _secondRevealed = null;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Scene");
     }
 }
